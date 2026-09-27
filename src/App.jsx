@@ -12,7 +12,7 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [nextId, setNextId] = useState(4);
   const [search, setSearch] = useState("");
-  const [filterPr, setFilterPr] = useState("");
+  const [priority, setPriority] = useState("");
 
   const [showData, setShowData] = useState([
     {
@@ -99,18 +99,16 @@ function App() {
   const lowerSearch = search.toLowerCase();
   const trimSearch = lowerSearch.trim();
 
-  const filteredSearch = showData.filter((data) => {
+  const searchTask = showData.filter((data) => {
     const descriptionMatch = data.description
       .toLowerCase()
       .includes(trimSearch);
     const titleMatch = data.title.toLowerCase().includes(trimSearch);
+    const priorityMatch = data.priority.includes(priority);
 
-    return descriptionMatch || titleMatch;
+    return priorityMatch && (descriptionMatch || titleMatch);
   });
 
-  // const filteredPr = showData.filter((data) => data.priority === filterPr);
-
-  // const filterTask = filteredSearch && filteredPr;
 
   // Helper template array to render columns easily without repeating card markup
   const columns = [
@@ -205,7 +203,7 @@ function App() {
             Priority:
           </label>
           <select
-            id="status"
+            id="priority"
             className="w-full px-3 py-2 text-sm text-slate-800 bg-white border border-slate-300 rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             value={formInput.priority}
             onChange={(e) => handleInputChange(e.target.value, e.target.id)}
@@ -236,7 +234,6 @@ function App() {
 
         {/* Flex container to place the search bar and select dropdown side-by-side */}
         <div className="flex items-center gap-3">
-          {/* Wrapped the input container to take up remaining space */}
           <div className="relative flex-1">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
@@ -271,10 +268,10 @@ function App() {
             <select
               id="status"
               className="h-full px-3 py-3 text-sm text-slate-800 bg-white border border-slate-300 rounded-lg shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={filterPr}
-              onChange={(e) => setFilterPr(e.target.value)}
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
             >
-              <option value="priorities">All Priorities</option>
+              <option value="">All Priorities</option>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
@@ -295,19 +292,19 @@ function App() {
             >
               <span>{col.title}</span>
               <span className="text-xs bg-white bg-opacity-60 px-2 py-0.5 rounded-full">
-                {showData.filter((d) => d.status === col.status).length}
+                {searchTask.filter((d) => d.status === col.status).length}
               </span>
             </div>
 
             {/* Task Card Stack */}
-            {filteredSearch.filter((d) => d.status === col.status).length ===
+            {searchTask.filter((d) => d.status === col.status).length ===
             0 ? (
               <div className="text-xs text-slate-400 text-center py-8 italic border-2 border-dashed border-slate-200 rounded-lg">
                 No tasks here
               </div>
             ) : (
               <div className="space-y-3 flex-1">
-                {filteredSearch
+                {searchTask
                   .filter((data) => data.status === col.status)
                   .map((data) => (
                     <div
