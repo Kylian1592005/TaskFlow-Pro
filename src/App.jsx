@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TaskForm from "./components/TaskForm";
 import SearchFilter from "./components/SearchFilter";
 import KanbanBoard from "./components/KanbanBoard";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
   const initialForm = {
@@ -16,15 +17,7 @@ function App() {
   const [nextId, setNextId] = useState(4);
   const [search, setSearch] = useState("");
   const [priority, setPriority] = useState("");
-
-  const [showData, setShowData] = useState(() => {
-    const getItem = localStorage.getItem("tasks");
-    return getItem ? JSON.parse(getItem) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(showData));
-  }, [showData]);
+  const [showData, setShowData] = useLocalStorage("tasks", []);
 
   const submitForm = (e) => {
     e.preventDefault();
