@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskForm from "./components/TaskForm";
 import SearchFilter from "./components/SearchFilter";
 import KanbanBoard from "./components/KanbanBoard";
@@ -17,29 +17,14 @@ function App() {
   const [search, setSearch] = useState("");
   const [priority, setPriority] = useState("");
 
-  const [showData, setShowData] = useState([
-    {
-      id: 1,
-      title: "JavaScript",
-      description: "To interact web page",
-      status: "todo",
-      priority: "high",
-    },
-    {
-      id: 2,
-      title: "Js",
-      description: "To interact web page",
-      status: "in-progress",
-      priority: "high",
-    },
-    {
-      id: 3,
-      title: "Css",
-      description: "To add design",
-      status: "done",
-      priority: "high",
-    },
-  ]);
+  const [showData, setShowData] = useState(() => {
+    const getItem = localStorage.getItem("tasks");
+    return getItem ? JSON.parse(getItem) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(showData));
+  }, [showData]);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -140,7 +125,7 @@ function App() {
       <TaskForm
         submitForm={submitForm}
         formInput={formInput}
-        onInputChange={handleInputChange}
+        handleInputChange={handleInputChange}
         editId={editId}
       />
 
