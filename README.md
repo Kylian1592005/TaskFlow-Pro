@@ -1,16 +1,38 @@
-# React + Vite
+# TaskFlow Pro
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, responsive React + Vite task management workspace engineered for seamless project tracking through an intuitive Kanban interface.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+TaskFlow Pro provides a clean, distraction-free environment to organize, prioritize, and track your daily workflows. Built with React 19 and Tailwind CSS, it offers smooth state management and persistent local storage to ensure your tasks stay synchronized across sessions.
 
-## React Compiler
+## Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Interactive Kanban Board:** Effortlessly structure tasks across **Todo**, **In Progress**, and **Done** status columns.
+- **Full Task Lifecycle:** Create, edit, and delete tasks with instant UI state updates.
+- **Real-Time Search & Filtering:** Dynamic search by task titles/details combined with priority-level filtering.
+- **State Persistence:** Custom local storage hook (`useLocalStorage`) guarantees data retention across page refreshes.
+- **Responsive Layout:** Clean, accessible interface styled with Tailwind CSS for mobile and desktop screens.
 
-## Expanding the Oxlint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- **Frontend:** React 19, Vite
+- **Styling:** Tailwind CSS
+- **State & Storage:** React Hooks, Browser LocalStorage
+
+## Project Structure
+
+```bash
+src/
+├── App.jsx
+├── components/
+│   ├── KanbanBoard.jsx
+│   ├── KanbanColumn.jsx
+│   ├── SearchFilter.jsx
+│   ├── TaskCard.jsx
+│   └── TaskForm.jsx
+├── context/
+├── hooks/
+│   └── useLocalStorage.js
+├── main.jsx
+└── App.css
